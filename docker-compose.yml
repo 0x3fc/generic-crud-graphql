@@ -1,0 +1,8 @@
+version: "3"
+services:
+  database:
+    image: postgres:alpine
+    ports:
+      - 2273:5432
+    env_file:
+      - ./.env

@@ -1,0 +1,26 @@
+{
+  "name": "generic-crud-graphql",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "nodemon",
+    "prestart": "docker-compose up -d",
+    "postinstall": "cp .env.example .env"
+  },
+  "dependencies": {
+    "apollo-server": "^2.9.7",
+    "class-validator": "^0.11.0",
+    "dotenv": "^8.2.0",
+    "pg": "^7.14.0",
+    "pluralize": "^8.0.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^0.17.5",
+    "typeorm": "^0.2.20"
+  },
+  "devDependencies": {
+    "@types/pluralize": "^0.0.29",
+    "graphql": "^14.5.8",
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.7.2"
+  }
+}

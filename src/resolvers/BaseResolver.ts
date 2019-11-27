@@ -31,11 +31,17 @@ export const createBaseResolver = <T extends ClassType>(
     PayloadType: CreatePayload,
     enabled: isCreateEnabled,
   } = service._config.create;
+  const {
+    PayloadType: UpdatePayload,
+    enabled: isUpdateEnabled,
+  } = service._config.update;
 
   @InputType(`FindOne${name.captitalize()}Payload`)
   class FindOneInput extends FindOnePayload {}
   @InputType(`Create${name.captitalize()}Payload`)
   class CreateInput extends CreatePayload {}
+  @InputType(`Update${name.captitalize()}Payload`)
+  class UpdateInput extends UpdatePayload {}
 
   @Resolver({ isAbstract: true })
   abstract class BaseResolver {
@@ -61,6 +67,14 @@ export const createBaseResolver = <T extends ClassType>(
     })
     public async create(@Arg("payload") payload: CreateInput): Promise<T> {
       return service.create(payload);
+    }
+
+    @Mutation(() => model, {
+      name: `update${name.captitalize()}`,
+      deprecationReason: markDeprecation(isUpdateEnabled),
+    })
+    public async update(@Arg("payload") payload: UpdateInput): Promise<T> {
+      return service.update(payload);
     }
   }
 

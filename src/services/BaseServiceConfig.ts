@@ -1,5 +1,9 @@
 import { ClassType } from "type-graphql";
-import { BaseCreateInput, BaseFindOneInput } from "../inputs/BaseInput";
+import {
+  BaseCreateInput,
+  BaseFindOneInput,
+  BaseUpdateInput,
+} from "../inputs/BaseInput";
 
 export interface IBaseServiceConfigField {
   enabled: boolean;
@@ -18,5 +22,9 @@ export class BaseServiceConfig {
   public create: IBaseServiceConfigField = {
     enabled: true,
     PayloadType: BaseCreateInput,
+  };
+  public update: IBaseServiceConfigField = {
+    enabled: true,
+    PayloadType: BaseUpdateInput,
   };
 }

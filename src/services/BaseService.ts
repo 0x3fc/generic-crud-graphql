@@ -1,6 +1,10 @@
 import { getRepository } from "typeorm";
 import { ModelNotFoundError } from "../errors/ModelNotFoundError";
-import { BaseCreateInput, BaseFindOneInput } from "../inputs/BaseInput";
+import {
+  BaseCreateInput,
+  BaseFindOneInput,
+  BaseUpdateInput,
+} from "../inputs/BaseInput";
 import { BaseServiceConfig } from "./BaseServiceConfig";
 
 export interface IBaseService<T> {
@@ -8,6 +12,7 @@ export interface IBaseService<T> {
   findOne(payload: any): Promise<T>;
   find(): Promise<T[]>;
   create(payload: any): Promise<T>;
+  update(payload: any): Promise<T>;
 }
 
 export class BaseService<T> implements IBaseService<T> {
@@ -30,6 +35,12 @@ export class BaseService<T> implements IBaseService<T> {
 
   public async create(payload: BaseCreateInput): Promise<T> {
     const instance = new this._model();
+    Object.assign(instance, payload);
+    return this.getRepository().save(instance);
+  }
+
+  public async update(payload: BaseUpdateInput): Promise<T> {
+    const instance = await this.getRepository().findOneOrFail(payload.id);
     Object.assign(instance, payload);
     return this.getRepository().save(instance);
   }

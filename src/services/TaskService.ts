@@ -1,4 +1,8 @@
-import { CreateTaskInput, FindOneTaskInput } from "../inputs/TaskInput";
+import {
+  CreateTaskInput,
+  FindOneTaskInput,
+  UpdateTaskInput,
+} from "../inputs/TaskInput";
 import { Task } from "../models/Task";
 import { BaseService } from "./BaseService";
 import { BaseServiceConfig } from "./BaseServiceConfig";
@@ -11,6 +15,10 @@ const config: BaseServiceConfig = {
   },
   create: {
     PayloadType: CreateTaskInput,
+    enabled: true,
+  },
+  update: {
+    PayloadType: UpdateTaskInput,
     enabled: true,
   },
 };

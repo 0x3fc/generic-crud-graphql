@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-@ObjectType()
+@ObjectType({ isAbstract: true })
 export class BaseModel extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn("uuid")

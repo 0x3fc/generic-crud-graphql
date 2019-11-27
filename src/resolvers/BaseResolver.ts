@@ -21,7 +21,11 @@ export const createBaseResolver = <T extends ClassType>(
   model: T,
   service: IBaseService<any>
 ) => {
+  /* Construct strings */
   const pluralName = plural(name);
+  const captitalizedName = name.captitalize();
+
+  /* Destructure configs */
   const {
     PayloadType: FindOnePayload,
     enabled: isFindOneEnabled,
@@ -36,13 +40,15 @@ export const createBaseResolver = <T extends ClassType>(
     enabled: isUpdateEnabled,
   } = service._config.update;
 
-  @InputType(`FindOne${name.captitalize()}Payload`)
+  /* Construct inputs */
+  @InputType(`FindOne${captitalizedName}Payload`)
   class FindOneInput extends FindOnePayload {}
-  @InputType(`Create${name.captitalize()}Payload`)
+  @InputType(`Create${captitalizedName}Payload`)
   class CreateInput extends CreatePayload {}
-  @InputType(`Update${name.captitalize()}Payload`)
+  @InputType(`Update${captitalizedName}Payload`)
   class UpdateInput extends UpdatePayload {}
 
+  /* Build resolver */
   @Resolver({ isAbstract: true })
   abstract class BaseResolver {
     @Query(() => model, {
@@ -62,7 +68,7 @@ export const createBaseResolver = <T extends ClassType>(
     }
 
     @Mutation(() => model, {
-      name: `create${name.captitalize()}`,
+      name: `create${captitalizedName}`,
       deprecationReason: markDeprecation(isCreateEnabled),
     })
     public async create(@Arg("payload") payload: CreateInput): Promise<T> {
@@ -70,7 +76,7 @@ export const createBaseResolver = <T extends ClassType>(
     }
 
     @Mutation(() => model, {
-      name: `update${name.captitalize()}`,
+      name: `update${captitalizedName}`,
       deprecationReason: markDeprecation(isUpdateEnabled),
     })
     public async update(@Arg("payload") payload: UpdateInput): Promise<T> {

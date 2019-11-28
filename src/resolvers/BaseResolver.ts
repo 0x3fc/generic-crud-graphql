@@ -39,6 +39,10 @@ export const createBaseResolver = <T extends ClassType>(
     PayloadType: UpdatePayload,
     enabled: isUpdateEnabled,
   } = service._config.update;
+  const {
+    PayloadType: DeletePayload,
+    enabled: isDeleteEnabled,
+  } = service._config.delete;
 
   /* Construct inputs */
   @InputType(`FindOne${captitalizedName}Payload`)
@@ -47,6 +51,8 @@ export const createBaseResolver = <T extends ClassType>(
   class CreateInput extends CreatePayload {}
   @InputType(`Update${captitalizedName}Payload`)
   class UpdateInput extends UpdatePayload {}
+  @InputType(`Delete${captitalizedName}Payload`)
+  class DeleteInput extends DeletePayload {}
 
   /* Build resolver */
   @Resolver({ isAbstract: true })
@@ -81,6 +87,14 @@ export const createBaseResolver = <T extends ClassType>(
     })
     public async update(@Arg("payload") payload: UpdateInput): Promise<T> {
       return service.update(payload);
+    }
+
+    @Mutation(() => model, {
+      name: `delete${captitalizedName}`,
+      deprecationReason: markDeprecation(isDeleteEnabled),
+    })
+    public async delete(@Arg("payload") payload: DeleteInput): Promise<T> {
+      return service.delete(payload);
     }
   }
 

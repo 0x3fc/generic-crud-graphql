@@ -1,6 +1,7 @@
 import { ClassType } from "type-graphql";
 import {
   BaseCreateInput,
+  BaseDeleteInput,
   BaseFindOneInput,
   BaseUpdateInput,
 } from "../inputs/BaseInput";
@@ -26,5 +27,9 @@ export class BaseServiceConfig {
   public update: IBaseServiceConfigField = {
     enabled: true,
     PayloadType: BaseUpdateInput,
+  };
+  public delete: IBaseServiceConfigField = {
+    enabled: true,
+    PayloadType: BaseDeleteInput,
   };
 }

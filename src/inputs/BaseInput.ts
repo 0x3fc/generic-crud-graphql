@@ -22,3 +22,9 @@ export class BaseUpdateInput {
   @Field()
   id: string;
 }
+
+@InputType({ isAbstract: true })
+export class BaseDeleteInput {
+  @Field()
+  id: string;
+}

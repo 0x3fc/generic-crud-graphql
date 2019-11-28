@@ -2,6 +2,7 @@ import { getRepository } from "typeorm";
 import { ModelNotFoundError } from "../errors/ModelNotFoundError";
 import {
   BaseCreateInput,
+  BaseDeleteInput,
   BaseFindOneInput,
   BaseUpdateInput,
 } from "../inputs/BaseInput";
@@ -13,6 +14,7 @@ export interface IBaseService<T> {
   find(): Promise<T[]>;
   create(payload: any): Promise<T>;
   update(payload: any): Promise<T>;
+  delete(payload: any): Promise<T>;
 }
 
 export class BaseService<T> implements IBaseService<T> {
@@ -43,6 +45,13 @@ export class BaseService<T> implements IBaseService<T> {
     const instance = await this.getRepository().findOneOrFail(payload.id);
     Object.assign(instance, payload);
     return this.getRepository().save(instance);
+  }
+
+  public async delete(payload: BaseDeleteInput): Promise<T> {
+    const repository = this.getRepository();
+    const instance = await repository.findOneOrFail(payload.id);
+    await this.getRepository().delete(payload.id);
+    return instance;
   }
 
   public getRepository() {

@@ -5,23 +5,13 @@ import {
 } from "../inputs/TaskInput";
 import { Task } from "../models/Task";
 import { BaseService } from "./BaseService";
-import { BaseServiceConfig } from "./BaseServiceConfig";
+import { BaseServiceConfigFactory } from "./BaseServiceConfig";
 
-const config: BaseServiceConfig = {
-  ...new BaseServiceConfig(),
-  findOne: {
-    PayloadType: FindOneTaskInput,
-    enabled: true,
-  },
-  create: {
-    PayloadType: CreateTaskInput,
-    enabled: true,
-  },
-  update: {
-    PayloadType: UpdateTaskInput,
-    enabled: true,
-  },
-};
+const configBuilder = new BaseServiceConfigFactory();
+configBuilder.setFindOne({ PayloadType: FindOneTaskInput });
+configBuilder.setCreate({ PayloadType: CreateTaskInput });
+configBuilder.setUpdate({ PayloadType: UpdateTaskInput });
+const config = configBuilder.build();
 
 export class TaskService extends BaseService<Task> {
   constructor() {

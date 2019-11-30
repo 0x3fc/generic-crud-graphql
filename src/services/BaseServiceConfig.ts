@@ -64,27 +64,27 @@ export class BaseServiceConfigFactory {
 
   /* Setters */
   public setFindOne({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled && (this.findOne.enabled = enabled);
+    enabled !== undefined && (this.findOne.enabled = enabled);
     PayloadType && (this.findOne.PayloadType = PayloadType);
   }
 
   public setFind({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled && (this.find.enabled = enabled);
+    enabled !== undefined && (this.find.enabled = enabled);
     PayloadType && (this.find.PayloadType = PayloadType);
   }
 
   public setCreate({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled && (this.create.enabled = enabled);
+    enabled !== undefined && (this.create.enabled = enabled);
     PayloadType && (this.create.PayloadType = PayloadType);
   }
 
   public setUpdate({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled && (this.update.enabled = enabled);
+    enabled !== undefined && (this.update.enabled = enabled);
     PayloadType && (this.update.PayloadType = PayloadType);
   }
 
   public setDelete({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled && (this.delete.enabled = enabled);
+    enabled !== undefined && (this.delete.enabled = enabled);
     PayloadType && (this.delete.PayloadType = PayloadType);
   }
 

@@ -7,6 +7,7 @@ import {
   Query,
   Resolver,
 } from "type-graphql";
+import { NotImplementedError } from "../errors/NotImplementedError";
 import { IBaseService } from "../services/BaseService";
 
 const markDeprecation = (isEnabled: boolean) =>
@@ -15,6 +16,10 @@ const markDeprecation = (isEnabled: boolean) =>
 interface IBaseResolverConfig {
   name: string;
 }
+
+const deprecationFunction = (_?: any): any => {
+  throw new NotImplementedError();
+};
 
 export const createBaseResolver = <T extends ClassType>(
   { name }: IBaseResolverConfig,
@@ -97,6 +102,12 @@ export const createBaseResolver = <T extends ClassType>(
       return service.delete(payload);
     }
   }
+
+  if (!isFindOneEnabled) BaseResolver.prototype.findOne = deprecationFunction;
+  if (!isFindEnabled) BaseResolver.prototype.find = deprecationFunction;
+  if (!isCreateEnabled) BaseResolver.prototype.create = deprecationFunction;
+  if (!isUpdateEnabled) BaseResolver.prototype.update = deprecationFunction;
+  if (!isDeleteEnabled) BaseResolver.prototype.delete = deprecationFunction;
 
   return BaseResolver;
 };

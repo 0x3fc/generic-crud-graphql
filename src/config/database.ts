@@ -1,5 +1,7 @@
 import { ConnectionOptions } from "typeorm";
 
+const entities = ["src/models/**/*.ts"];
+
 export const __database: { [_: string]: ConnectionOptions } = {
   default: {
     type: "postgres",
@@ -13,6 +15,13 @@ export const __database: { [_: string]: ConnectionOptions } = {
     database: process.env.POSTGRES_DB || "",
     dropSchema: false,
     synchronize: true,
-    entities: ["src/models/**/*.ts"]
-  }
+    entities,
+  },
+  testing: {
+    type: "sqlite",
+    database: ":memory:",
+    dropSchema: true,
+    synchronize: true,
+    entities,
+  },
 };

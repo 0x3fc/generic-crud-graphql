@@ -2,5 +2,9 @@ import { createConnection } from "typeorm";
 import { config } from "../config";
 
 export const connectDb = () => {
-  createConnection(config.database.default);
+  const isTesting = process.env.NODE_ENV === "test";
+  const connectionConfig = isTesting
+    ? config.database.testing
+    : config.database.default;
+  return createConnection(connectionConfig);
 };

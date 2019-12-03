@@ -1,11 +1,14 @@
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { config } from "../config";
+import { authChecker } from "../middlewares/AuthChecker";
+import { context } from "../middlewares/Context";
 
 export const createSchema = async () =>
   buildSchema({
+    authChecker,
     resolvers: config.graphql.resolver.paths,
-    emitSchemaFile: config.graphql.schema.emitPath
+    emitSchemaFile: config.graphql.schema.emitPath,
   });
 
 export const build = async () => {
@@ -15,11 +18,12 @@ export const build = async () => {
 
   return new ApolloServer({
     schema,
+    context,
     tracing: !isProduction,
 
     playground: isProduction
       ? false
-      : (config.graphql.playground.settings as any)
+      : (config.graphql.playground.settings as any),
   });
 };
 

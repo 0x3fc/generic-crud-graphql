@@ -19,7 +19,10 @@ export class UserResolver {
       throw new ModelNotFoundError();
     }
 
-    return User.findOne(userId);
+    const user = await User.findOneOrFail(userId);
+    user.token = Token.signAccess(user);
+
+    return user;
   }
 
   @Mutation(() => User)

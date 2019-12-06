@@ -6,7 +6,13 @@ import {
   BaseUpdateInput,
 } from "./BaseInput";
 
+type TServiceEndpoint = "findOne" | "find" | "create" | "update" | "delete";
+
 interface IBaseServiceBuilderField {
+  name?: string;
+  nullable?: boolean | "items" | "itemsAndList";
+  defaultValue?: any;
+  complexity?: number; // TODO: ComplexityEstimator is also a choise but it is not exported from type-graphql
   enabled?: boolean;
   PayloadType?: ClassType;
 }
@@ -16,7 +22,11 @@ export interface IBaseServiceConfigField extends IBaseServiceBuilderField {
   PayloadType: ClassType;
 }
 
-export class BaseServiceConfig {
+type TBaseServiceConfig = {
+  [_ in TServiceEndpoint]: IBaseServiceConfigField;
+};
+
+export class BaseServiceConfig implements TBaseServiceConfig {
   public readonly findOne: IBaseServiceConfigField = {
     enabled: true,
     PayloadType: BaseFindOneInput,
@@ -63,29 +73,39 @@ export class BaseServiceConfigFactory {
   };
 
   /* Setters */
-  public setFindOne({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled !== undefined && (this.findOne.enabled = enabled);
-    PayloadType && (this.findOne.PayloadType = PayloadType);
+  public setFindOne(fields: IBaseServiceBuilderField) {
+    this.set(fields, "findOne");
+  }
+  public setFind(fields: IBaseServiceBuilderField) {
+    this.set(fields, "find");
+  }
+  public setCreate(fields: IBaseServiceBuilderField) {
+    this.set(fields, "create");
+  }
+  public setUpdate(fields: IBaseServiceBuilderField) {
+    this.set(fields, "update");
+  }
+  public setDelete(fields: IBaseServiceBuilderField) {
+    this.set(fields, "delete");
   }
 
-  public setFind({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled !== undefined && (this.find.enabled = enabled);
-    PayloadType && (this.find.PayloadType = PayloadType);
-  }
-
-  public setCreate({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled !== undefined && (this.create.enabled = enabled);
-    PayloadType && (this.create.PayloadType = PayloadType);
-  }
-
-  public setUpdate({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled !== undefined && (this.update.enabled = enabled);
-    PayloadType && (this.update.PayloadType = PayloadType);
-  }
-
-  public setDelete({ enabled, PayloadType }: IBaseServiceBuilderField) {
-    enabled !== undefined && (this.delete.enabled = enabled);
-    PayloadType && (this.delete.PayloadType = PayloadType);
+  public set(
+    {
+      name,
+      nullable,
+      defaultValue,
+      complexity,
+      enabled,
+      PayloadType,
+    }: IBaseServiceBuilderField,
+    endpoint: TServiceEndpoint
+  ) {
+    name !== undefined && (this[endpoint].name = name);
+    nullable !== undefined && (this[endpoint].nullable = nullable);
+    defaultValue !== undefined && (this[endpoint].defaultValue = defaultValue);
+    complexity && (this[endpoint].complexity = complexity);
+    enabled !== undefined && (this[endpoint].enabled = enabled);
+    PayloadType && (this[endpoint].PayloadType = PayloadType);
   }
 
   /* Builder */

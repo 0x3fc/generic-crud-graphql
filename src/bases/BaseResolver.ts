@@ -32,19 +32,41 @@ export const createBaseResolver = <T extends ClassType>(
 
   /* Destructure configs */
   const {
+    name: findOneName,
+    nullable: findOneNullable,
+    defaultValue: findOneDefaultValue,
+    complexity: findOneComplexity,
     PayloadType: FindOnePayload,
     enabled: isFindOneEnabled,
   } = service._config.findOne;
-  const { enabled: isFindEnabled } = service._config.find;
   const {
+    name: findName,
+    nullable: findNullable,
+    defaultValue: findDefaultValue,
+    complexity: findComplexity,
+    enabled: isFindEnabled,
+  } = service._config.find;
+  const {
+    name: createName,
+    nullable: createNullable,
+    defaultValue: createDefaultValue,
+    complexity: createComplexity,
     PayloadType: CreatePayload,
     enabled: isCreateEnabled,
   } = service._config.create;
   const {
+    name: updateName,
+    nullable: updateNullable,
+    defaultValue: updateDefaultValue,
+    complexity: updateComplexity,
     PayloadType: UpdatePayload,
     enabled: isUpdateEnabled,
   } = service._config.update;
   const {
+    name: deleteName,
+    nullable: deleteNullable,
+    defaultValue: deleteDefaultValue,
+    complexity: deleteComplexity,
     PayloadType: DeletePayload,
     enabled: isDeleteEnabled,
   } = service._config.delete;
@@ -63,7 +85,10 @@ export const createBaseResolver = <T extends ClassType>(
   @Resolver({ isAbstract: true })
   abstract class BaseResolver {
     @Query(() => model, {
-      name,
+      name: findOneName || name,
+      nullable: findOneNullable,
+      defaultValue: findOneDefaultValue,
+      complexity: findOneComplexity,
       deprecationReason: markDeprecation(isFindOneEnabled),
     })
     public async findOne(@Arg("payload") payload: FindOneInput): Promise<T> {
@@ -71,7 +96,10 @@ export const createBaseResolver = <T extends ClassType>(
     }
 
     @Query(() => [model], {
-      name: pluralName,
+      name: findName || pluralName,
+      nullable: findNullable,
+      defaultValue: findDefaultValue,
+      complexity: findComplexity,
       deprecationReason: markDeprecation(isFindEnabled),
     })
     public async find() {
@@ -79,7 +107,10 @@ export const createBaseResolver = <T extends ClassType>(
     }
 
     @Mutation(() => model, {
-      name: `create${captitalizedName}`,
+      name: createName || `create${captitalizedName}`,
+      nullable: createNullable,
+      defaultValue: createDefaultValue,
+      complexity: createComplexity,
       deprecationReason: markDeprecation(isCreateEnabled),
     })
     public async create(@Arg("payload") payload: CreateInput): Promise<T> {
@@ -87,7 +118,10 @@ export const createBaseResolver = <T extends ClassType>(
     }
 
     @Mutation(() => model, {
-      name: `update${captitalizedName}`,
+      name: updateName || `update${captitalizedName}`,
+      nullable: updateNullable,
+      defaultValue: updateDefaultValue,
+      complexity: updateComplexity,
       deprecationReason: markDeprecation(isUpdateEnabled),
     })
     public async update(@Arg("payload") payload: UpdateInput): Promise<T> {
@@ -95,7 +129,10 @@ export const createBaseResolver = <T extends ClassType>(
     }
 
     @Mutation(() => model, {
-      name: `delete${captitalizedName}`,
+      name: deleteName || `delete${captitalizedName}`,
+      nullable: deleteNullable,
+      defaultValue: deleteDefaultValue,
+      complexity: deleteComplexity,
       deprecationReason: markDeprecation(isDeleteEnabled),
     })
     public async delete(@Arg("payload") payload: DeleteInput): Promise<T> {

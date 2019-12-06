@@ -1,6 +1,6 @@
 import { Field, ObjectType } from "type-graphql";
 import { Column, Entity } from "typeorm";
-import { BaseModel } from "./BaseModel";
+import { BaseModel } from "../bases/BaseModel";
 
 @ObjectType()
 @Entity("users")

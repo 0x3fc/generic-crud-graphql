@@ -1,11 +1,11 @@
+import { BaseService } from "../bases/BaseService";
+import { BaseServiceConfigFactory } from "../bases/BaseServiceConfig";
 import {
   CreateTaskInput,
   FindOneTaskInput,
   UpdateTaskInput,
 } from "../inputs/TaskInput";
 import { Task } from "../models/Task";
-import { BaseService } from "./BaseService";
-import { BaseServiceConfigFactory } from "./BaseServiceConfig";
 
 const configBuilder = new BaseServiceConfigFactory();
 configBuilder.setFindOne({ PayloadType: FindOneTaskInput });

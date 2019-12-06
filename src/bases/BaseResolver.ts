@@ -8,7 +8,7 @@ import {
   Resolver,
 } from "type-graphql";
 import { NotImplementedError } from "../errors/NotImplementedError";
-import { IBaseService } from "../services/BaseService";
+import { IBaseService } from "./BaseService";
 
 const markDeprecation = (isEnabled: boolean) =>
   isEnabled ? undefined : "Sorry the endpoint is not available";

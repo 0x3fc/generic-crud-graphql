@@ -5,7 +5,7 @@ import {
   BaseDeleteInput,
   BaseFindOneInput,
   BaseUpdateInput,
-} from "../inputs/BaseInput";
+} from "./BaseInput";
 import { BaseServiceConfig } from "./BaseServiceConfig";
 
 export interface IBaseService<T> {

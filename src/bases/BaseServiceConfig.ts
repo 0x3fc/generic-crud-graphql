@@ -4,7 +4,7 @@ import {
   BaseDeleteInput,
   BaseFindOneInput,
   BaseUpdateInput,
-} from "../inputs/BaseInput";
+} from "./BaseInput";
 
 interface IBaseServiceBuilderField {
   enabled?: boolean;

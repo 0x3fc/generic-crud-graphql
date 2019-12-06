@@ -4,7 +4,7 @@ import {
   BaseCreateInput,
   BaseFindOneInput,
   BaseUpdateInput,
-} from "./BaseInput";
+} from "../bases/BaseInput";
 
 @InputType()
 export class FindOneTaskInput extends BaseFindOneInput {}

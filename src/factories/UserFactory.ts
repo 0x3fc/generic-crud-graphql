@@ -1,7 +1,7 @@
 import { hashSync } from "bcryptjs";
 import * as faker from "faker";
+import { BaseFactory } from "../bases/BaseFactory";
 import { User } from "../models/User";
-import { BaseFactory } from "./BaseFactory";
 
 export class UserFactory extends BaseFactory<User> {
   constructor() {

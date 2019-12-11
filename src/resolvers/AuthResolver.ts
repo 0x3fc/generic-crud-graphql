@@ -32,10 +32,10 @@ export class UserResolver {
     { username, email, password }: RegisterInput,
     @Ctx() { res }: IContext
   ) {
-    // TODO: Move existent test to validator
-    const userExists = await User.findOne({
+    const userExists = !!(await User.findOne({
       where: [{ username }, { email }],
-    });
+    }));
+
     if (userExists) {
       throw new DuplicatedModelError();
     }

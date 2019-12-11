@@ -42,7 +42,7 @@ export class UserResolver {
     const user = new User();
     user.username = username;
     user.email = email;
-    user.password = bcrypt.hashSync(password);
+    user.password = password;
 
     await user.save();
 

@@ -1,5 +1,6 @@
+import { hashSync } from "bcryptjs";
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity } from "typeorm";
+import { BeforeInsert, Column, Entity } from "typeorm";
 import { BaseModel } from "../bases/BaseModel";
 
 @ObjectType()
@@ -18,4 +19,9 @@ export class User extends BaseModel {
 
   @Field({ nullable: true })
   token?: string;
+
+  @BeforeInsert()
+  encryptPassword() {
+    this.password = hashSync(this.password);
+  }
 }

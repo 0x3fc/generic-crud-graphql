@@ -1,4 +1,3 @@
-import { hashSync } from "bcryptjs";
 import * as faker from "faker";
 import { BaseFactory } from "../bases/BaseFactory";
 import { User } from "../models/User";
@@ -13,8 +12,4 @@ export class UserFactory extends BaseFactory<User> {
     email: faker.internet.email(),
     password: faker.internet.password(),
   };
-
-  async beforeCreateHook(instance: User) {
-    instance.password = hashSync(instance.password);
-  }
 }

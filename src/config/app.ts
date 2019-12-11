@@ -1,3 +1,3 @@
 export const __app = {
-  port: 4000
+  port: 4000,
 };

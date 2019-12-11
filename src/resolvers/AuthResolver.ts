@@ -10,6 +10,7 @@ import { User } from "../models/User";
 import { Token } from "../utils/Token";
 
 const COOKIE_MAX_AGE = config.jwt.cookieMaxAge;
+const COOKIE_NAME = config.jwt.cookieName;
 
 @Resolver()
 export class UserResolver {
@@ -72,8 +73,14 @@ export class UserResolver {
     return user;
   }
 
+  @Mutation(() => Boolean)
+  public logout(@Ctx() { res }: IContext) {
+    this.setCookie(res, "");
+    return true;
+  }
+
   private setCookie(res: Response, token: string) {
-    res.cookie("token", token, {
+    res.cookie(COOKIE_NAME, token, {
       httpOnly: true,
       maxAge: COOKIE_MAX_AGE,
     });

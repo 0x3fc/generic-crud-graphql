@@ -1,3 +1,4 @@
+import { config } from "../../../src/config";
 import { UserFactory } from "../../../src/factories/UserFactory";
 import { Token } from "../../../src/utils/Token";
 import { JWT_REGEX } from "../../utils/regex";
@@ -31,7 +32,7 @@ describe("AuthResolver :: Login", () => {
     };
 
     const cookie = (tokenName: string, token: string) => {
-      expect(tokenName).toBe("token");
+      expect(tokenName).toBe(config.jwt.cookieName);
       expect(Token.decode(token).id).toBe(user.id);
       expect(() => Token.verifyAndDecode(token)).not.toThrow();
     };

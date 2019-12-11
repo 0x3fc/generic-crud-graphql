@@ -9,4 +9,5 @@ export const __jwt = {
   accessExpire: 7 * DAY,
   secret: process.env.JWT_SECRET || "topsecret",
   cookieMaxAge: 1 * MONTH * 1000,
+  cookieName: "token",
 };
